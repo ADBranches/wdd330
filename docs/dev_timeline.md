@@ -1,5 +1,5 @@
 # Jumuiya Tours – Development Timeline
-Student: Edwin Bwambale  
+Student: Edwin Kambale  
 Course: WDD 330 – Web Frontend Development  
 
 This document tracks the planned work and weekly progress for the **Jumuiya Tours – East Africa Trip Planner** final project.
