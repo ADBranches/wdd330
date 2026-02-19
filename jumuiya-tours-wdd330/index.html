@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Jumuiya Tours – East Africa Trip Planner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Plan multi-day trips across East Africa with maps, attractions, and budget estimates in one place."
+    />
+
+    <!-- Google Fonts (matches proposal: Poppins + Inter/Open Sans) -->
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/theme.css" />
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <!-- ========== HEADER ========== -->
+      <header class="app-header">
+        <div class="app-header__inner">
+          <a href="#home" class="brand">
+            <span class="brand__icon" aria-hidden="true">⛰️</span>
+            <span class="brand__text">
+              <span class="brand__name">Jumuiya Tours</span>
+              <span class="brand__tagline">East Africa Trip Planner</span>
+            </span>
+          </a>
+
+          <nav class="main-nav" aria-label="Main">
+            <button
+              class="nav-link nav-link--active"
+              type="button"
+              data-view-target="home"
+              id="nav-home"
+            >
+              Home
+            </button>
+            <button
+              class="nav-link"
+              type="button"
+              data-view-target="planner"
+              id="nav-planner"
+            >
+              Trip Planner
+            </button>
+            <button
+              class="nav-link"
+              type="button"
+              data-view-target="saved"
+              id="nav-saved"
+            >
+              Saved Trips
+            </button>
+          </nav>
+        </div>
+      </header>
+
+      <!-- ========== MAIN ========== -->
+      <main class="app-main">
+        <!-- ===== Home / Search View ===== -->
+        <section
+          id="view-home"
+          class="view view--active"
+          aria-label="Home and destination search"
+        >
+          <div class="container container--narrow">
+            <section class="hero">
+              <div class="hero__text">
+                <h1 class="hero__title">
+                  Plan your next East Africa adventure.
+                </h1>
+                <p class="hero__subtitle">
+                  Search cities, discover attractions, build a day-by-day
+                  itinerary, and estimate your budget – all in one page.
+                </p>
+
+                <form class="destination-search" novalidate>
+                  <label class="field">
+                    <span class="field__label">Where do you want to go?</span>
+                    <input
+                      class="field__input"
+                      type="search"
+                      name="destination"
+                      id="destination-input"
+                      placeholder="Try Kampala, Nairobi, Kigali..."
+                      autocomplete="off"
+                      required
+                    />
+                  </label>
+
+                  <button class="btn btn--primary" type="submit">
+                    Search destination
+                  </button>
+                </form>
+
+                <div class="quick-destinations" aria-label="Quick destinations">
+                  <p class="quick-destinations__label">Popular starting points</p>
+                  <div class="chip-row">
+                    <button class="chip" type="button" data-city="Kampala">
+                      Kampala
+                    </button>
+                    <button class="chip" type="button" data-city="Nairobi">
+                      Nairobi
+                    </button>
+                    <button class="chip" type="button" data-city="Kigali">
+                      Kigali
+                    </button>
+                    <button class="chip" type="button" data-city="Arusha">
+                      Arusha
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <aside class="hero__panel" aria-hidden="true">
+                <div class="hero-card">
+                  <h2 class="hero-card__title">How it works</h2>
+                  <ol class="hero-card__steps">
+                    <li>Search a destination in East Africa.</li>
+                    <li>Pick attractions from the map &amp; list.</li>
+                    <li>Organize days and estimate your budget.</li>
+                    <li>Save your trip and revisit anytime.</li>
+                  </ol>
+                </div>
+              </aside>
+            </section>
+          </div>
+        </section>
+
+        <!-- ===== Destination View ===== -->
+        <section
+          id="view-destination"
+          class="view"
+          aria-label="Destination details and attractions"
+        >
+          <div class="container">
+            <header class="section-header">
+              <div>
+                <p class="eyebrow">Destination overview</p>
+
+                <h1 id="destination-title" class="h1">
+                  Select a destination to begin
+                </h1>
+
+                <p id="destination-subtitle" class="lead text-muted">
+                  After you search for a city, we’ll show its summary, map preview, and
+                  attractions here.
+                </p>
+
+                <p id="destination-meta" class="meta-text text-muted"></p>
+              </div>
+            </header>
+
+            <section class="card card--placeholder">
+              <h2 class="card__title">Highlights &amp; attractions</h2>
+              <ul id="destination-attractions-placeholder" class="stack gap-xs">
+                <li class="text-muted">
+                  Once the Places API is integrated, you'll see top attractions for this
+                  destination here.
+                </li>
+              </ul>
+            </section>
+
+            <div class="destination-layout">
+              <div class="destination-layout__map" aria-label="Map preview">
+                <div class="map-preview">
+                  <p class="map-preview__placeholder">
+                    Map preview: markers and routes will appear here when you choose a
+                    destination.
+                  </p>
+                </div>
+              </div>
+
+              <div class="destination-layout__content">
+                <div class="tabs" role="tablist" aria-label="Destination sections">
+                  <button
+                    class="tab tab--active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="tab-attractions"
+                    id="tab-attractions-button"
+                  >
+                    Attractions
+                  </button>
+                  <button
+                    class="tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="tab-itinerary"
+                    id="tab-itinerary-button"
+                  >
+                    Itinerary
+                  </button>
+                </div>
+
+                <div class="tab-panels">
+                  <section
+                    id="tab-attractions"
+                    class="tab-panel tab-panel--active"
+                    role="tabpanel"
+                    aria-labelledby="tab-attractions-button"
+                  >
+                    <p class="muted">
+                      Once we fetch nearby attractions, they will appear here with “Add
+                      to Day” buttons.
+                    </p>
+                  </section>
+
+                  <section
+                    id="tab-itinerary"
+                    class="tab-panel"
+                    role="tabpanel"
+                    aria-labelledby="tab-itinerary-button"
+                  >
+                    <p class="muted">
+                      A compact overview of your itinerary will show up here.
+                    </p>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ===== Planner View ===== -->
+        <section
+          id="view-planner"
+          class="view"
+          aria-label="Trip planner and budget"
+        >
+          <div class="container">
+            <header class="section-header">
+              <div>
+                <p class="eyebrow">Planner</p>
+                <h2 class="section-title">Build your day-by-day itinerary</h2>
+                <p class="section-subtitle">
+                  Organize attractions into days, see approximate routes, and
+                  sketch a simple budget for your trip.
+                </p>
+              </div>
+            </header>
+
+            <div class="planner-layout">
+              <section class="planner-layout__itinerary" aria-label="Itinerary">
+                <h3 class="subheading">Trip days</h3>
+                <p class="muted">
+                  After you start adding stops from the destination view, your
+                  days and activities will appear in this list.
+                </p>
+
+                <div class="itinerary-days" id="itinerary-days">
+                  <!-- Dynamic day cards will be injected here later -->
+                  <article class="card card--placeholder">
+                    <h4 class="card__title">No days yet</h4>
+                    <p class="card__body">
+                      Use “Add to Day” from the attractions list to build your
+                      first day. You can manage days and stops here.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section
+                class="planner-layout__map-budget"
+                aria-label="Map and budget"
+              >
+                <div class="planner-map" aria-label="Planner map area">
+                  <h3 class="subheading">Map &amp; route overview</h3>
+                  <div class="map-panel">
+                    <p class="map-preview__placeholder">
+                      A full interactive map with markers and a daily route will
+                      appear here once we connect the Mapbox API.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="planner-budget" aria-label="Budget overview">
+                  <h3 class="subheading">Budget snapshot</h3>
+                  <p class="muted">
+                    Keep a rough estimate of your costs. Later, this panel will
+                    pull live exchange rates to convert between currencies.
+                  </p>
+
+                  <form class="budget-form" novalidate>
+                    <div class="budget-grid">
+                      <label class="field">
+                        <span class="field__label">Transport</span>
+                        <input
+                          class="field__input"
+                          type="number"
+                          min="0"
+                          step="1"
+                          placeholder="0"
+                          inputmode="decimal"
+                        />
+                      </label>
+                      <label class="field">
+                        <span class="field__label">Accommodation</span>
+                        <input
+                          class="field__input"
+                          type="number"
+                          min="0"
+                          step="1"
+                          placeholder="0"
+                          inputmode="decimal"
+                        />
+                      </label>
+                      <label class="field">
+                        <span class="field__label">Activities</span>
+                        <input
+                          class="field__input"
+                          type="number"
+                          min="0"
+                          step="1"
+                          placeholder="0"
+                          inputmode="decimal"
+                        />
+                      </label>
+                      <label class="field">
+                        <span class="field__label">Other</span>
+                        <input
+                          class="field__input"
+                          type="number"
+                          min="0"
+                          step="1"
+                          placeholder="0"
+                          inputmode="decimal"
+                        />
+                      </label>
+                    </div>
+
+                    <label class="field budget-form__currency">
+                      <span class="field__label">Currency</span>
+                      <select class="field__input">
+                        <option value="UGX">UGX – Uganda Shilling</option>
+                        <option value="KES">KES – Kenya Shilling</option>
+                        <option value="TZS">TZS – Tanzania Shilling</option>
+                        <option value="USD">USD – US Dollar</option>
+                      </select>
+                    </label>
+
+                    <div class="budget-summary">
+                      <p class="budget-summary__line">
+                        Estimated total: <span id="budget-total">—</span>
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== Saved Trips View ===== -->
+        <section
+          id="view-saved"
+          class="view"
+          aria-label="Saved itineraries"
+        >
+          <div class="container container--narrow">
+            <header class="section-header">
+              <div>
+                <p class="eyebrow">Saved trips</p>
+                <h2 class="section-title">Come back to trips you’ve planned</h2>
+                <p class="section-subtitle">
+                  Trips that you save on this device will appear here. You’ll be
+                  able to reload them into the planner view and continue
+                  editing.
+                </p>
+              </div>
+            </header>
+
+            <section class="saved-empty-state">
+              <article class="card card--placeholder">
+                <h3 class="card__title">No saved trips yet</h3>
+                <p class="card__body">
+                  Once the planner is wired up, you’ll see a “Save trip” action.
+                  Use it to bookmark itineraries for future weekends, holidays,
+                  or safaris.
+                </p>
+              </article>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      <!-- ========== FOOTER ========== -->
+      <footer class="app-footer">
+        <div class="app-footer__inner container container--narrow">
+          <p class="app-footer__text">
+            &copy; <span id="footer-year"></span> Jumuiya Tours. Built by
+            Edwin Kambale for WDD 330 – Web Frontend Development.
+          </p>
+          <p class="app-footer__text app-footer__text--muted">
+            Map &amp; place data will be provided by OpenTripMap and Mapbox;
+            currency rates by a free exchange-rate API.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS entry (will be wired in Phase 2) -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

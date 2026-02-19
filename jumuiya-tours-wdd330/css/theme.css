@@ -1,0 +1,26 @@
+/* Design tokens: colors, radii, shadows */
+
+:root {
+  /* Colors from proposal */
+  --color-primary: #0a6ebd; /* deep blue */
+  --color-secondary: #2a9d8f; /* teal/green */
+  --color-accent: #f4a261; /* warm orange */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-muted: #6b7280;
+
+  --color-primary-soft: linear-gradient(
+    135deg,
+    #0a6ebd,
+    #2a9d8f
+  ); /* used in header pills */
+
+  /* Radii */
+  --radius-sm: 0.35rem;
+  --radius-md: 0.6rem;
+  --radius-lg: 1rem;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.08);
+}

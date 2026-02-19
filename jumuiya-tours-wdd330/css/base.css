@@ -1,0 +1,101 @@
+/* ========== Base reset & typography ========== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: var(--color-text, #1a1a1a);
+  background-color: var(--color-bg, #f8f9fa);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Remove default margins but keep vertical rhythm with utilities */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0 0 0.75rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+/* Links */
+
+a {
+  color: var(--color-primary, #0a6ebd);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+/* Lists */
+
+ul,
+ol {
+  padding-left: 1.25rem;
+  margin: 0 0 0.75rem;
+}
+
+/* Forms */
+
+input,
+select,
+button,
+textarea {
+  font: inherit;
+}
+
+/* Buttons */
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Images */
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Utilities */
+
+.muted {
+  color: var(--color-muted, #6b7280);
+}
+
+/* Accessibility focus outline */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent, #f4a261);
+  outline-offset: 2px;
+}

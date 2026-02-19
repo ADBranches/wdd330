@@ -1,8 +1,9 @@
 // js/ui/homeView.js
 import { qs, qsa } from "../utils/dom.js";
 import { navigateTo } from "../router.js";
-import { geocodeCity } from "../api/mapbox.js";
-import { getAttractionsByCoords } from "../api/opentripmap.js";
+import { geocodeCity } from "../api/locationiq.js";
+import { Destination } from "../models/destination.js";
+import { showDestination } from "./destinationView.js";
 
 export function initHomeView() {
   const form = qs(".destination-search");
@@ -15,7 +16,7 @@ export function initHomeView() {
     yearSpan.textContent = new Date().getFullYear();
   }
 
-  // Quick destination chips: populate input
+  // Quick destination chips: fill the input and optionally auto-submit later
   quickButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const city = btn.dataset.city;
@@ -26,7 +27,6 @@ export function initHomeView() {
     });
   });
 
-  // Real API call on submit
   if (form && input) {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -36,36 +36,43 @@ export function initHomeView() {
         return;
       }
 
-      console.log(`[homeView] Searching for "${city}"...`);
+      console.log(`[homeView] Searching for "${city}" via LocationIQ...`);
 
       try {
-        // 1) Geocode city → coords
         const geo = await geocodeCity(city);
+
         if (!geo) {
           console.warn("[homeView] No geocode result for", city);
           alert("We could not find that city. Try a nearby major city.");
           return;
         }
 
-        console.log("[homeView] Geocoded:", geo);
+        console.log("[homeView] Geocode result:", geo);
 
-        // 2) Sample attractions around the geocoded point
-        const pois = await getAttractionsByCoords(geo.lat, geo.lon, 5000, 10);
-        console.log("[homeView] Sample attractions:", pois);
+        const destination = new Destination({
+          name: geo.name,
+          country: geo.country,
+          lat: geo.lat,
+          lon: geo.lon,
+        });
 
-        // Later we will pass this data into destination view.
+        // Render destination view
+        showDestination(destination);
+
+        // Navigate to the destination screen
         navigateTo("destination");
       } catch (err) {
-        console.error("[homeView] Error while fetching destination data:", err);
+        console.error("[homeView] Error while geocoding:", err);
         alert(
-          "Something went wrong while talking to the travel APIs. " +
-            "Check your API keys and try again."
+          "Something went wrong while contacting the location service. " +
+            "Check your LocationIQ token in js/config.js and try again."
         );
       }
     });
   }
 }
 
+// Optional hook for future if needed
 export function showHomeView() {
-  // Hook for future behavior when we reopen the Home view
+  // e.g. could reset search form when returning to Home
 }
