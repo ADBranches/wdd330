@@ -130,3 +130,34 @@
   font-size: 0.85rem;
   color: var(--color-muted);
 }
+
+
+/* Filter chips for destination categories */
+
+.chip--filter {
+  cursor: pointer;
+}
+
+.chip--filter.is-active {
+  background-color: var(--color-primary-soft);
+  color: #0f172a;
+  border-color: transparent;
+}
+
+/* Attractions grid layout */
+
+.attractions-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .attractions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.attraction-card .btn--add-to-day {
+  margin-top: 0.5rem;
+}

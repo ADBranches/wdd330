@@ -171,13 +171,23 @@
 
             <section class="card card--placeholder">
               <h2 class="card__title">Highlights &amp; attractions</h2>
-              <ul id="destination-attractions-placeholder" class="stack gap-xs">
-                <li class="text-muted">
-                  Once the Places API is integrated, you'll see top attractions for this
-                  destination here.
-                </li>
-              </ul>
+
+              <!-- NEW: filter chips -->
+              <div class="chip-row" id="destination-filters">
+                <button class="chip chip--filter is-active" data-filter="all">All</button>
+                <button class="chip chip--filter" data-filter="nature">Nature</button>
+                <button class="chip chip--filter" data-filter="culture">Culture</button>
+                <button class="chip chip--filter" data-filter="fun">
+                  Fun &amp; Leisure
+                </button>
+              </div>
+
+              <!-- NEW: dynamic attractions grid -->
+              <div id="destination-attractions" class="attractions-grid">
+                <!-- Attraction cards will be injected here by destinationView.js -->
+              </div>
             </section>
+
 
             <div class="destination-layout">
               <div class="destination-layout__map" aria-label="Map preview">
