@@ -161,3 +161,42 @@
 .attraction-card .btn--add-to-day {
   margin-top: 0.5rem;
 }
+
+/* Planner day cards */
+
+.day-card {
+  margin-top: 0.75rem;
+}
+
+.day-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.day-stops {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.day-stop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn.btn--small {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.8rem;
+}
+
+.btn--ghost {
+  background-color: transparent;
+  border-color: rgba(15, 23, 42, 0.15);
+}

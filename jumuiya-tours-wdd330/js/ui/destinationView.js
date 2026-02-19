@@ -2,21 +2,31 @@
 import { qs, qsa } from "../utils/dom.js";
 import { getAttractionsByCoords } from "../api/opentripmap.js";
 import { formatDistance, formatKinds } from "../utils/format.js";
+import { itinerary } from "../models/itinerary.js";
+import { getCurrentDayId, notifyItineraryUpdated } from "./plannerView.js";
 
-/**
- * Render a Destination instance into the Destination view.
- * @param {import("../models/destination.js").Destination} destination
- */
-// js/ui/destinationView.js
-import { qs, qsa } from "../utils/dom.js";
-import { getAttractionsByCoords } from "../api/opentripmap.js";
-import { formatDistance, formatKinds } from "../utils/format.js";
-
+// -----------------------------
+// Module-level state
+// -----------------------------
 let currentDestination = null;
 let allAttractions = [];
 let currentFilter = "all";
 let filterChipsInitialized = false;
 
+// -----------------------------
+// Destination getters/setters
+// -----------------------------
+export function getCurrentDestination() {
+  return currentDestination;
+}
+
+export function setCurrentDestination(dest) {
+  currentDestination = dest || null;
+}
+
+// -----------------------------
+// Filter predicates
+// -----------------------------
 /**
  * Simple mapping from filter key → predicate.
  * You can tweak these later.
@@ -36,6 +46,9 @@ const FILTER_PREDICATES = {
     (a.kinds || "").includes("tourist_facilities"),
 };
 
+// -----------------------------
+// Public: showDestination
+// -----------------------------
 /**
  * Render a Destination instance into the Destination view.
  * @param {import("../models/destination.js").Destination} destination
@@ -46,6 +59,7 @@ export async function showDestination(destination) {
     return;
   }
 
+  // Track current destination for saving/restoring later
   currentDestination = destination;
   allAttractions = [];
   currentFilter = "all";
@@ -66,8 +80,8 @@ export async function showDestination(destination) {
   }
 
   if (metaEl) {
-    const lat = isFinite(destination.lat) ? destination.lat.toFixed(4) : "?";
-    const lon = isFinite(destination.lon) ? destination.lon.toFixed(4) : "?";
+    const lat = Number.isFinite(destination.lat) ? destination.lat.toFixed(4) : "?";
+    const lon = Number.isFinite(destination.lon) ? destination.lon.toFixed(4) : "?";
     metaEl.textContent = `Approx. coordinates: ${lat}, ${lon}`;
   }
 
@@ -96,6 +110,9 @@ export async function showDestination(destination) {
   }
 }
 
+// -----------------------------
+// Filters
+// -----------------------------
 function initFilterChipsIfNeeded() {
   if (filterChipsInitialized) return;
 
@@ -120,6 +137,9 @@ function syncFilterChips() {
   });
 }
 
+// -----------------------------
+// Rendering attractions
+// -----------------------------
 function renderAttractions() {
   const container = qs("#destination-attractions");
   if (!container) return;
@@ -140,6 +160,30 @@ function renderAttractions() {
   }
 
   container.innerHTML = filtered.map(makeAttractionCardHtml).join("");
+
+  // Delegate click for "Add to Day" buttons
+  container.onclick = (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    if (!target.classList.contains("btn--add-to-day")) return;
+
+    const xid = target.dataset.xid;
+    if (!xid) return;
+
+    const attraction = allAttractions.find((a) => a.xid === xid);
+    if (!attraction) return;
+
+    const dayId = getCurrentDayId();
+    // Pass destination so the itinerary can store context
+    itinerary.addStop(dayId, attraction, currentDestination);
+    notifyItineraryUpdated();
+
+    // Optional UX feedback
+    target.textContent = "Added!";
+    setTimeout(() => {
+      target.textContent = "Add to Day";
+    }, 1200);
+  };
 }
 
 function makeAttractionCardHtml(attraction) {

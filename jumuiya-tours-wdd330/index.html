@@ -272,25 +272,33 @@
             </header>
 
             <div class="planner-layout">
+              <!-- LEFT: Itinerary -->
               <section class="planner-layout__itinerary" aria-label="Itinerary">
-                <h3 class="subheading">Trip days</h3>
-                <p class="muted">
-                  After you start adding stops from the destination view, your
-                  days and activities will appear in this list.
-                </p>
-
-                <div class="itinerary-days" id="itinerary-days">
-                  <!-- Dynamic day cards will be injected here later -->
-                  <article class="card card--placeholder">
-                    <h4 class="card__title">No days yet</h4>
-                    <p class="card__body">
-                      Use “Add to Day” from the attractions list to build your
-                      first day. You can manage days and stops here.
+                <!--  NEW: Minimal HTML hooks -->
+                <div class="planner-header">
+                  <div>
+                    <h3 class="subheading">Trip planner</h3>
+                    <p class="meta-text">
+                      Add attractions into days and manage your itinerary here.
                     </p>
-                  </article>
+                  </div>
+                  <button id="planner-add-day" class="btn">
+                    + Add Day
+                  </button>
                 </div>
+
+                <label class="field">
+                  <span class="field__label">Add attractions to:</span>
+                  <select id="planner-day-select" class="field__input"></select>
+                </label>
+
+                <div id="planner-day-list">
+                  <!-- JS will inject day cards here -->
+                </div>
+                <!--  END: Minimal hooks -->
               </section>
 
+              <!-- RIGHT: Map + Budget (unchanged) -->
               <section
                 class="planner-layout__map-budget"
                 aria-label="Map and budget"
@@ -381,6 +389,7 @@
             </div>
           </div>
         </section>
+
 
         <!-- ===== Saved Trips View ===== -->
         <section
